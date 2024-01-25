@@ -3,6 +3,12 @@
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <script src="https://aframe.io/releases/1.5.0/aframe.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/mind-ar@1.2.5/dist/mindar-image-aframe.prod.js"></script>
+
+    <script src="https://raw.githubusercontent.com/mrdoob/three.js/master/examples/js/loaders/GLTFLoader.js"></script>
+    <script src="https://raw.githubusercontent.com/mrdoob/three.js/master/examples/js/controls/OrbitControls.js"></script>
+    <script src="https://raw.githubusercontent.com/mrdoob/three.js/master/examples/js/libs/stats.min.js"></script>
+    <script src="https://raw.githubusercontent.com/mrdoob/three.js/master/examples/jsm/loaders/GLTFLoader.js"></script>
+    <script src="https://raw.githubusercontent.com/donmccurdy/aframe-extras/master/dist/aframe-extras.loaders.min.js"></script>
     <script>
         document.addEventListener("DOMContentLoaded", function() {
             const sceneEl = document.querySelector('a-scene');
@@ -18,6 +24,10 @@
             const exampleTarget = document.querySelector('#example-target');
             exampleTarget.addEventListener("targetFound", event => {
                 audio.play();
+                const model = document.querySelector('a-gltf-model');
+                model.addEventListener('model-loaded', () => {
+                    model.components['animation-mixer'].play('die1');
+                });
             });
 
             exampleTarget.addEventListener("targetLost", event => {
@@ -32,17 +42,16 @@
         <source src="sound.mp3" id="sound" loop="false">
     </audio>
     <a-scene mindar-image="imageTargetSrc: pared.mind;" color-space="sRGB" renderer="colorManagement: true, physicallyCorrectLights" vr-mode-ui="enabled: false" device-orientation-permission-ui="enabled: false">
-      <a-assets>
-	<a-asset-item id="avatarModel" src="stegosaurs_SStenops.gltf"></a-asset-item>
-      </a-assets>
+        <a-assets>
+            <a-asset-item id="avatarModel" src="dino.gltf"></a-asset-item>
+        </a-assets>
 
       <a-camera position="0 0 0" look-controls="enabled: false"></a-camera>
 
       <a-entity id="example-target" mindar-image-target="targetIndex: 0">
-        <a-gltf-model rotation="0 0 0 " position="0 0 0" scale="0.1 0.1 0.1" src="#avatarModel"
-          animation="dur: 5000; easing: easeInOutQuad; loop: false; dir: normal"
-        >
+        <a-gltf-model rotation="0 0 0 " position="0 0 0" scale="0.1 0.1 0.1" src="#avatarModel" animation-mixer="clip: die1">
       </a-entity>
+
     </a-scene>
   </body>
 </html>
