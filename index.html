@@ -3,6 +3,21 @@
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <script src="https://aframe.io/releases/1.5.0/aframe.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/mind-ar@1.2.5/dist/mindar-image-aframe.prod.js"></script>
+    <script>
+        document.addEventListener("DOMContentLoaded", function() {
+            const sceneEl = document.querySelector('a-scene');
+            let arSystem;
+            sceneEl.addEventListener('loaded', function () {
+                arSystem = sceneEl.systems["mindar-image-system"];
+            });
+            var audio = new Audio('sound.mp3');
+
+            // detect click event
+            examplePlane.addEventListener("click", event => {
+                audio.play();
+            });
+        });
+      </script>
   </head>
   <body>
     <a-scene mindar-image="imageTargetSrc: pared.mind; filterMinCF:0.1; filterBeta: 10; warmupTolerance: 1; missTolerance: 1" color-space="sRGB" renderer="colorManagement: true, physicallyCorrectLights" vr-mode-ui="enabled: false" device-orientation-permission-ui="enabled: false">
@@ -14,7 +29,7 @@
 
       <a-entity mindar-image-target="targetIndex: 0">
         <a-gltf-model rotation="0 0 0 " position="0 0 0" scale="0.1 0.1 0.1" src="#avatarModel"
-          animation="property: position; to: 0 0.1 0.1; dur: 1000; easing: easeInOutQuad; loop: true; dir: alternate"
+          animation="dur: 10000; easing: easeInOutQuad; loop: false; dir: normal"
         >
       </a-entity>
     </a-scene>
