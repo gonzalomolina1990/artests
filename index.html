@@ -25,7 +25,7 @@
             exampleTarget.addEventListener("targetFound", event => {
                 audio.play();
                 const model = document.querySelector('a-gltf-model');
-                model.addEventListener('model-loaded', () => {
+                model.addEventListener('loaded', () => {
                     model.components['animation-mixer'].play('die1');
                 });
             });
