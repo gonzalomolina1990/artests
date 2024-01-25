@@ -10,8 +10,9 @@
             sceneEl.addEventListener('loaded', function () {
                 arSystem = sceneEl.systems["mindar-image-system"];
             });
-            arSystem.start();
-            var audio = new Audio('sound.mp3');
+            var audio = document.querySelector('#audio');
+            audio.loop = true;
+
 
             // detect target found
             const exampleTarget = document.querySelector('#example-target');
@@ -19,11 +20,18 @@
                 audio.play();
             });
 
+            exampleTarget.addEventListener("targetLost", event => {
+                audio.pause();
+            });
+
         });
       </script>
   </head>
   <body>
-    <a-scene mindar-image="imageTargetSrc: pared.mind; filterMinCF:0.1; filterBeta: 10; warmupTolerance: 1; missTolerance: 1" color-space="sRGB" renderer="colorManagement: true, physicallyCorrectLights" vr-mode-ui="enabled: false" device-orientation-permission-ui="enabled: false">
+    <audio id="audio" loop="false" volume="60">
+        <source src="sound.mp3" id="sound" loop="false">
+    </audio>
+    <a-scene mindar-image="imageTargetSrc: pared.mind;" color-space="sRGB" renderer="colorManagement: true, physicallyCorrectLights" vr-mode-ui="enabled: false" device-orientation-permission-ui="enabled: false">
       <a-assets>
 	<a-asset-item id="avatarModel" src="stegosaurs_SStenops.gltf"></a-asset-item>
       </a-assets>
@@ -32,7 +40,7 @@
 
       <a-entity id="example-target" mindar-image-target="targetIndex: 0">
         <a-gltf-model rotation="0 0 0 " position="0 0 0" scale="0.1 0.1 0.1" src="#avatarModel"
-          animation="dur: 10000; easing: easeInOutQuad; loop: false; dir: normal"
+          animation="dur: 5000; easing: easeInOutQuad; loop: false; dir: normal"
         >
       </a-entity>
     </a-scene>
