@@ -19,7 +19,7 @@
                 arSystem = sceneEl.systems["mindar-image-system"];
             });
             var audio = document.querySelector('#audio');
-            audio.loop = true;
+            audio.loop = false;
 
 
             // detect target found
@@ -42,7 +42,7 @@
       </script>
   </head>
   <body>
-    <audio id="audio" loop="false" volume="60">
+    <audio id="audio" loop="false" volume="40">
         <source src="sound.mp3" id="sound" loop="false">
     </audio>
     <a-scene mindar-image="imageTargetSrc: pared.mind;" color-space="sRGB" renderer="colorManagement: true, physicallyCorrectLights" vr-mode-ui="enabled: false" device-orientation-permission-ui="enabled: false">
