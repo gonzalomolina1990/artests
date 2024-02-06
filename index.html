@@ -22,10 +22,26 @@
             audio.loop = false;
 
 
+
+
             // detect target found
             const exampleTarget = document.querySelector('#example-target');
+
+
+
             exampleTarget.addEventListener("targetFound", event => {
-               target.setAttribute('animation-mixer', {clip: 'die1', loop: "once", duration: 10, clampWhenFinished: true, startAt: 0});
+               target.setAttribute('animation-mixer', {clip: "JUMP", loop: "once", duration: 2, startAt: 0, crossFadeDuration: 0.5});
+
+                // Esperar hasta que la animación "JUMP" haya terminado para agregar la animación "RUN"
+                target.addEventListener('animation-finished', function (event) {
+                  target.setAttribute('animation-mixer', {clip: "RUN", loop: "pingpong", duration: 2, startAt: 0, crossFadeDuration: 0.5});
+                  audio.pause();
+                  setTimeout(() => {
+                    location.href = "https://play.google.com/store/apps/details?id=com.zhiliaoapp.musically&hl=es&gl=US";
+                  }, 8000);
+                });
+
+                
                 audio.play();
                 
             });
@@ -34,16 +50,14 @@
                 audio.pause();
             });
 
-            exampleTarget.addEventListener("animation-finished", event => {
-                location.href = "https://play.google.com/store/apps/details?id=com.zhiliaoapp.musically&hl=es&gl=US";
-            });
+
 
         });
       </script>
   </head>
   <body>
     <audio id="audio" loop="false" volume="40">
-        <source src="sound.mp3" id="sound" loop="false">
+        <source src="sound.wav" id="sound" loop="false">
     </audio>
     <a-scene mindar-image="imageTargetSrc: pared.mind;" color-space="sRGB" renderer="colorManagement: true, physicallyCorrectLights" vr-mode-ui="enabled: false" device-orientation-permission-ui="enabled: false">
         <a-assets>
@@ -53,7 +67,7 @@
       <a-camera position="0 0 0" look-controls="enabled: false"></a-camera>
 
       <a-entity id="example-target" mindar-image-target="targetIndex: 0">
-        <a-gltf-model id="dino" rotation="0 0 0 " position="0 0 0" scale="0.5" src="#avatarModel" animation-mixer="clip: die1">
+        <a-gltf-model id="dino" rotation="0 90 0 " position="0 0 0" scale="0.1 0.1 0.1" src="#avatarModel">
           
       </a-entity>
 
